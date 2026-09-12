@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Installs elan, reads lean-toolchain, fetches the Mathlib cache, and runs
+      # `lake build` — which is the proof check. A false theorem fails the build.
+      - uses: leanprover/lean-action@v1
+        with:
+          build-args: "--log-level=warning"
+
+      # `lake build` succeeds on a `sorry`, only warning. So a repo of unproved —
+      # even false — theorems would pass the step above. Fail explicitly instead.
+      - name: No theorem may be admitted with `sorry`
+        run: |
+          if lake build 2>&1 | tee build.log | grep -q "declaration uses \`sorry\`"; then
+            echo "::error::Unproved theorems found — 'sorry' admits anything without proof."
+            grep "declaration uses \`sorry\`" build.log
+            exit 1
+          fi
+          echo "No sorry found; every theorem is proved."
+
+      # The executable links Mathlib's generated C, so this catches breakage the
+      # library build alone does not.
+      - name: Programs run
+        run: |
+          test "$(lake exe listmax 3 1 7 2 9 4)" = "max = 9"
+          echo "listmax produced the expected output."

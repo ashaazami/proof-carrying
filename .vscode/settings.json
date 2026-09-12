@@ -1,0 +1,22 @@
+{
+  // Lean source is full of unicode (∀ ⟨⟩ ℕ →). Without this, VS Code flags much of
+  // it as "ambiguous characters" and highlights working code as suspicious.
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+
+  // Lean's convention is two spaces, never tabs.
+  "[lean4]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // Hide the 8 GB of vendored dependencies, but NOT build/ — that directory
+  // holds the generated C, and reading it is the point of generating it.
+  "files.exclude": {
+    "**/.lake": true,
+    "**/.beam": true
+  },
+  "search.exclude": {
+    "**/.lake": true,
+    "**/build": true
+  }
+}

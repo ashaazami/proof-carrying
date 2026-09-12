@@ -1,0 +1,26 @@
+name = "ProofCarrying"
+version = "0.1.0"
+keywords = ["math", "verified-programs"]
+defaultTargets = ["MathTheorems", "Programs"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false # mathlib contribution house-style; not needed here
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.1"
+
+[[lean_lib]]
+name = "MathTheorems"
+
+[[lean_lib]]
+name = "Programs"
+
+[[lean_exe]]
+name = "listmax"
+root = "Programs.ListMax.Main"

@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Lean: build",
+      "type": "shell",
+      "command": "lake build",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Run listmax",
+      "type": "shell",
+      "command": "lake exe listmax ${input:numbers}",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Refresh generated C",
+      "type": "shell",
+      "command": "./scripts/build.sh",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numbers",
+      "type": "promptString",
+      "description": "Numbers to take the max of",
+      "default": "3 1 7 2 9 4"
+    }
+  ]
+}
