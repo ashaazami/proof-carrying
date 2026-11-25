@@ -24,3 +24,7 @@ name = "Programs"
 [[lean_exe]]
 name = "listmax"
 root = "Programs.ListMax.Main"
+
+[[lean_exe]]
+name = "sorting"
+root = "Programs.Sorting.Main"
